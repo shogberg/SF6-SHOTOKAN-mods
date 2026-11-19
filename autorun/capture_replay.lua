@@ -17,6 +17,14 @@ local CHARACTERS = {
     [19] = "Ed", [20] = "E Honda", [21] = "Jamie", [22] = "Akuma", [26] = "M Bison", [27] = "Terry",
     [28] = "Mai",
 }
+-- names typed into Move Export v4 (sf6_moves/char_names.json) cover characters missing from the list above
+local function load_char_names()
+    local ok, saved = pcall(json.load_file, "sf6_moves/char_names.json")
+    if ok and type(saved) == "table" then
+        for k, v in pairs(saved) do CHARACTERS[tonumber(k)] = v end
+    end
+end
+load_char_names()
 
 local autosave = true
 local capture_projectiles = true
@@ -147,6 +155,7 @@ end
 
 -- replay ID, player names and round results of the replay being watched
 local function read_replay_info()
+    load_char_names()  -- pick up names saved since the script loaded
     local mgr = sdk.get_managed_singleton("app.BattleReplayDataManager")
     if not mgr then return end
     local item = safe(function() return mgr._ReplayList._items[0] end)
@@ -359,7 +368,7 @@ re.on_frame(function()
         local ok, err = pcall(read_frame)
         if not ok then last_error = tostring(err) end
     end
-    imgui.begin_window("Replay Capture v3.1", true, 0)
+    imgui.begin_window("Replay Capture v3.2", true, 0)
     local changed
     changed, autosave = imgui.checkbox("Auto-save <replayid>.json at match end", autosave)
     changed, capture_projectiles = imgui.checkbox("Record projectiles (experimental; untick if the replay stutters)", capture_projectiles)
