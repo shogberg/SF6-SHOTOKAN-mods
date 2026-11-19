@@ -164,6 +164,29 @@ local function read_replay_info()
     replay.info.p1_name = safe(function() return item.ReplayInfo.player1_info.player.fighter_id end)
     replay.info.p2_name = safe(function() return item.ReplayInfo.player2_info.player.fighter_id end)
     replay.info.battle_type = safe(function() return item.ReplayInfo.replay_battle_type end)
+    -- CFN ID (Buckler "short_id", e.g. .shog = 1307078698) and rank info, when the replay data carries them
+    for n, key in ipairs({ "player1_info", "player2_info" }) do
+        local pi = safe(function() return item.ReplayInfo[key] end)
+        local pl = pi and safe(function() return pi.player end)
+        local side = "p" .. n
+        local sid = pl and safe(function() return pl.short_id end)
+        replay.info[side .. "_cfn_id"] = sid ~= nil and tostring(sid) or nil
+        replay.info[side .. "_platform"] = pl and safe(function() return pl.platform_name end)
+        replay.info[side .. "_mr"] = pi and safe(function() return pi.master_rating end)
+        replay.info[side .. "_lp"] = pi and safe(function() return pi.league_point end)
+        -- one-off discovery: list the field names on the player objects so missing IDs can be found
+        if replay.info.player_fields == nil then
+            replay.info.player_fields = {}
+            for _, obj in ipairs({ pi, pl }) do
+                local td = obj and safe(function() return obj:get_type_definition() end)
+                if td then
+                    for _, f in ipairs(td:get_fields()) do
+                        replay.info.player_fields[#replay.info.player_fields + 1] = td:get_name() .. "." .. f:get_name()
+                    end
+                end
+            end
+        end
+    end
     local rounds = safe(function() return item.ReplayData.ReplayInfo.RoundInfo end)
     if rounds then
         replay.info.round_results = {}
@@ -368,7 +391,7 @@ re.on_frame(function()
         local ok, err = pcall(read_frame)
         if not ok then last_error = tostring(err) end
     end
-    imgui.begin_window("Replay Capture v3.2", true, 0)
+    imgui.begin_window("Replay Capture v3.3", true, 0)
     local changed
     changed, autosave = imgui.checkbox("Auto-save <replayid>.json at match end", autosave)
     changed, capture_projectiles = imgui.checkbox("Record projectiles (experimental; untick if the replay stutters)", capture_projectiles)
