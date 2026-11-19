@@ -1,2 +1,4 @@
+# Captures and other files the scripts write to reframework/data stay local
 *.json
-!**/config.example.json
+# ...except the move name tables shipped with the repo
+!data/sf6_moves/*.json

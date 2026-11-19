@@ -10,10 +10,17 @@ They run in [REFramework](https://github.com/praydog/REFramework) (Lua).
 | `autorun/batch_replays.lua` | Plays a queue of replays by replay ID, driven by `batch/batch_record.py` in the SHOTOKAN repo. |
 
 ## Install
-Copy the files in `autorun/` into `Street Fighter 6\reframework\autorun\`, then reload scripts in the REFramework menu (Insert).
+1. Copy the files in `autorun/` into `Street Fighter 6\reframework\autorun\`.
+2. Copy the `data/sf6_moves/` folder into `Street Fighter 6\reframework\data\`, so you have `reframework\data\sf6_moves\09_Cammy.json` and so on.
+3. Reload scripts in the REFramework menu (Insert).
+
+## Move names (included)
+`data/sf6_moves/` has move names already exported for the whole roster (32 characters: Ryu through Arjun), plus `enums.json` (the game's state enums) and `char_names.json` (names for character IDs the scripts don't list). `capture_replay.lua` and the SHOTOKAN analyzer read these to name moves, so you don't need to export them yourself.
+
+Re-export a character after a game patch that changes moves, or to add a new character: see step 1 under **Use**. Each file is `<character id>_<name>.json`: `{char_id, char_name, moves: {action id: name}}`.
 
 ## Use
-1. **Move names (once per character):** load both characters in training mode, open the REFramework menu and press **Export moves for both characters** in the **Move Export** window.
+1. **Move names (only after a patch or for a new character):** load both characters in training mode, open the REFramework menu and press **Export moves for both characters** in the **Move Export** window.
 2. **Capture:** play a replay. `capture_replay.lua` saves `<replayid>.json` to `reframework\data` at match end.
 3. **Batch:** see `batch/README.md` in the SHOTOKAN repo to record many replays by ID with OBS.
 
