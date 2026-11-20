@@ -7,7 +7,7 @@ They run in [REFramework](https://github.com/praydog/REFramework) (Lua).
 |---|---|
 | `autorun/capture_replay.lua` | Records every frame of a replay (both players' action, HP, Drive, super, burnout, position, hitstun/blockstun, inputs) plus hit data and battle stats, and saves `reframework/data/<replayid>.json` when the match ends. |
 | `autorun/export_moves.lua` | Exports move names for the two loaded characters and the game's state enums to `reframework/data/sf6_moves/`, so captures get readable move names. |
-| `autorun/batch_replays.lua` | Plays a queue of replays by replay ID, driven by `batch/batch_record.py` in the SHOTOKAN repo. |
+| `autorun/batch_replays.lua` | Plays a queue of replays by replay ID, driven by `batch/batch_record.py` in the SHOTOKAN repo. Navigates CFN > Replays by screen name, one-frame key presses (rkaganda's scheme). |
 
 ## Install
 1. Copy the files in `autorun/` into `Street Fighter 6\reframework\autorun\`.
