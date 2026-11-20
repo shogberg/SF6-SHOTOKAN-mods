@@ -36,6 +36,7 @@ local replay, frames_captured, hits_captured
 local last_key, last_error, last_saved
 local last_stats, last_hitstun, last_combo, last_charge, last_proj
 local game_saved = false
+local idle_frames = 0       -- frames spent out of a fight (fight_st 0)
 
 local function clear()
     replay = { info = {}, frames = {}, hits = {}, stats = {}, charge = {}, projectiles = {} }
@@ -266,7 +267,16 @@ local function read_frame()
         end
         return
     end
-    if fight_st == 0 then return end   -- not in a fight (menus, loading)
+    if fight_st == 0 then              -- not in a fight (menus, loading)
+        -- A replay left before its end (fight_st 7) never saves; drop its frames once we've been out
+        -- of a fight for ~5 s, or they get glued onto the start of the next replay's capture.
+        idle_frames = idle_frames + 1
+        if idle_frames > 300 and frames_captured > 0 and not game_saved then
+            clear(); last_saved = "discarded an unfinished replay"
+        end
+        return
+    end
+    idle_frames = 0
     game_saved = false
 
     local round_number, stage_timer = sRound.RoundNo, sGame.stage_timer
@@ -391,7 +401,7 @@ re.on_frame(function()
         local ok, err = pcall(read_frame)
         if not ok then last_error = tostring(err) end
     end
-    imgui.begin_window("Replay Capture v3.3", true, 0)
+    imgui.begin_window("Replay Capture v3.4", true, 0)
     local changed
     changed, autosave = imgui.checkbox("Auto-save <replayid>.json at match end", autosave)
     changed, capture_projectiles = imgui.checkbox("Record projectiles (experimental; untick if the replay stutters)", capture_projectiles)
