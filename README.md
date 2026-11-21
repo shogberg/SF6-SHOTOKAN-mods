@@ -20,7 +20,7 @@ They run in [REFramework](https://github.com/praydog/REFramework) (Lua).
 Re-export a character after a game patch that changes moves, or to add a new character: see step 1 under **Use**. Each file is `<character id>_<name>.json`: `{char_id, char_name, moves: {action id: name}}`.
 
 ## Use
-1. **Move names (only after a patch or for a new character):** load both characters in training mode, open the REFramework menu and press **Export moves for both characters** in the **Move Export** window.
+1. **Move names (only after a patch or for a new character):** load both characters in training mode, open the REFramework menu and press **Export moves for both characters** under **Script Generated UI > Move Export**.
 2. **Capture:** play a replay. `capture_replay.lua` saves `<replayid>.json` to `reframework\data` at match end.
 3. **Batch:** see `batch/README.md` in the SHOTOKAN repo to record many replays by ID with OBS.
 

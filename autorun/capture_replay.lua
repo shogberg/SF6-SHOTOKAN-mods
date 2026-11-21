@@ -17,7 +17,7 @@ local CHARACTERS = {
     [19] = "Ed", [20] = "E Honda", [21] = "Jamie", [22] = "Akuma", [26] = "M Bison", [27] = "Terry",
     [28] = "Mai",
 }
--- names typed into Move Export v4 (sf6_moves/char_names.json) cover characters missing from the list above
+-- names typed into Move Export v4.1 (sf6_moves/char_names.json) cover characters missing from the list above
 local function load_char_names()
     local ok, saved = pcall(json.load_file, "sf6_moves/char_names.json")
     if ok and type(saved) == "table" then
@@ -401,7 +401,12 @@ re.on_frame(function()
         local ok, err = pcall(read_frame)
         if not ok then last_error = tostring(err) end
     end
-    imgui.begin_window("Replay Capture v3.4", true, 0)
+end)
+
+-- UI lives under "Script Generated UI" in the REFramework menu (Insert), like Batch replays.
+-- Recording runs in on_frame above whether or not the menu is open.
+re.on_draw_ui(function()
+    if not imgui.tree_node("Replay Capture v3.5") then return end
     local changed
     changed, autosave = imgui.checkbox("Auto-save <replayid>.json at match end", autosave)
     changed, capture_projectiles = imgui.checkbox("Record projectiles (experimental; untick if the replay stutters)", capture_projectiles)
@@ -419,5 +424,5 @@ re.on_frame(function()
         end
         imgui.tree_pop()
     end
-    imgui.end_window()
+    imgui.tree_pop()
 end)

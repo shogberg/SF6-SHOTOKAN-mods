@@ -6,7 +6,7 @@
 -- capture_replay.lua reads these files and adds move names to each saved replay.
 --
 -- Use: load training mode with the characters you want, open the REFramework menu (Insert),
--- and press "Export moves for both characters" in the "Move Export" window.
+-- and press "Export moves for both characters" under Script Generated UI > "Move Export".
 -- Written for Sean's replay reviews; uses the same game structures as rkaganda/sf6_replays_data
 -- and alphazolam's MMDK, which documented where the move tables live.
 
@@ -27,7 +27,7 @@ local typed = { [0] = "", [1] = "" }
 
 local ENUMS = { "nBattle.ACT_ST.ID", "nBattle.ACT_ID", "nBattle.POSE_ST", "nBattle.POSE_ST.ID", "nBattle.DMG_TYPE", "nBattle.HIT_TYPE" }
 
-local VERSION = "v4"
+local VERSION = "v4.1"
 local step = ""
 local status = "Load a match (training mode works) and press Export."
 
@@ -157,8 +157,9 @@ local function live_ids()
     end)
 end
 
-re.on_frame(function()
-    imgui.begin_window("Move Export " .. VERSION, true, 0)
+-- UI lives under "Script Generated UI" in the REFramework menu (Insert), like Batch replays.
+re.on_draw_ui(function()
+    if not imgui.tree_node("Move Export " .. VERSION) then return end
     local ids = live_ids()
     if ids then
         for i = 0, 1 do
@@ -191,5 +192,5 @@ re.on_frame(function()
         status = "Saved to reframework/data/sf6_moves: " .. tostring(r1) .. "; " .. tostring(r2)
     end
     imgui.text(status)
-    imgui.end_window()
+    imgui.tree_pop()
 end)
