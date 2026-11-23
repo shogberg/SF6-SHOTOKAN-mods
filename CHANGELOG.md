@@ -2,6 +2,9 @@
 
 Notable changes to the SHOTOKAN REFramework mods, newest first. Every push adds its changes here.
 
+
+## 2026-11-22
+- Moved to the shotokan-sf6 organization (was shogberg/SF6-SHOTOKAN-mods): link to shotokan-sf6/tools.
 ## 2026-11-21
 - Replay Capture and Move Export now draw under REFramework's **Script Generated UI** (like Batch Replays) instead of their own windows.
 

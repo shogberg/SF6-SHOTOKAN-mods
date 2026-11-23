@@ -1,6 +1,6 @@
 # SHOTOKAN REFramework mods
 
-In-game scripts for Street Fighter 6 that feed [SHOTOKAN](https://github.com/shogberg/SF6-SHOTOKAN), the replay-review tooling.
+In-game scripts for Street Fighter 6 that feed [SHOTOKAN](https://github.com/shotokan-sf6/tools), the replay-review tooling.
 They run in [REFramework](https://github.com/praydog/REFramework) (Lua).
 
 | Script | What it does |
