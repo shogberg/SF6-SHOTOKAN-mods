@@ -24,7 +24,7 @@ Re-export a character after a game patch that changes moves, or to add a new cha
 2. **Capture:** play a replay. `capture_replay.lua` saves `<replayid>.json` to `reframework\data` at match end.
 3. **Batch:** see `batch/README.md` in the SHOTOKAN repo to record many replays by ID with OBS.
 
-Then run `tools/analyze_capture.py` from the SHOTOKAN repo on the captures.
+Then run `tools/shared_core_analyze.py` from the SHOTOKAN repo on the captures.
 
 ## Credits
 `capture_replay.lua` and `batch_replays.lua` build on [rkaganda/SF6_replay_capture](https://github.com/rkaganda/SF6_replay_capture) and [rkaganda/sf6_replays_data](https://github.com/rkaganda/sf6_replays_data). `export_moves.lua` uses the same game structures, and alphazolam's MMDK, which documented where the move tables live.
