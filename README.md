@@ -15,7 +15,7 @@ They run in [REFramework](https://github.com/praydog/REFramework) (Lua).
 3. Reload scripts in the REFramework menu (Insert).
 
 ## Move names (included)
-`data/sf6_moves/` has move names already exported for the whole roster (32 characters: Ryu through Arjun), plus `enums.json` (the game's state enums) and `char_names.json` (names for character IDs the scripts don't list). `capture_replay.lua` and the SHOTOKAN analyzer read these to name moves, so you don't need to export them yourself.
+`data/sf6_moves/` has move names already exported for the whole roster (32 characters: Ryu through Arjun), plus `enums.json` (the game's state enums) and `char_names.json`, the one list of character names by ID (`{"9": "Cammy", ...}`). Both scripts and the analyzer read it, and nothing else hard-codes a character list. A new character shows as `char_<id>` until you name it in the Move Export window, which adds it to this file. `capture_replay.lua` and the SHOTOKAN analyzer read these to name moves, so you don't need to export them yourself.
 
 Re-export a character after a game patch that changes moves, or to add a new character: see step 1 under **Use**. Each file is `<character id>_<name>.json`: `{char_id, char_name, moves: {action id: name}}`.
 

@@ -2,6 +2,9 @@
 
 Notable changes to the SHOTOKAN REFramework mods, newest first. Every push adds its changes here.
 
+## 2026-11-24
+- Character names live in one place: `data/sf6_moves/char_names.json` now lists all 32 characters by ID, and `capture_replay.lua` and `export_moves.lua` read it instead of carrying their own copy of the list. Names are unchanged (`M Bison`, `E Honda`, `C.Viper`, ...), so existing captures and the database still match. Replay Capture shows a warning if the file is missing.
+- Update note: copy the new `char_names.json` into `reframework\data\sf6_moves\` together with the scripts, or every character saves as `char_<id>`.
 
 ## 2026-11-22
 - Moved to the shotokan-sf6 organization (was shogberg/SF6-SHOTOKAN-mods): link to shotokan-sf6/tools.
